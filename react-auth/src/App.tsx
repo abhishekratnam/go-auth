@@ -1,38 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect,useState } from 'react';
 import './App.css';
-
+import Login from "./pages/Login";
+import Nav from "./components/Nav";
+import {BrowserRouter, Route} from "react-router-dom";
+import Register from "./pages/Register";
+import Home from "./pages/Home";
 function App() {
+
+  const [name, setName] = useState('');
+    useEffect(() =>{
+        (
+            async()=>{
+                const response = await fetch('http://localhost:8000/api/user',{
+                      
+                       headers: {'Content-Type':'application/json'},
+                       credentials:'include', //to get cookies from backend                      
+                   }); 
+                const content = await response.json()
+                setName(content.name);               
+              }
+
+        )();
+    });
+
+
   return (
-    <div className="App">
-       
-<nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-  <div className="container-fluid">
-    <a className="navbar-brand" href="#">Home</a>
-   
-    <div>
-      <ul className="navbar-nav me-auto mb-2 mb-md-0">
-        <li className="nav-item">
-          <a className="nav-link active" aria-current="page" href="#">Login</a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link active" aria-current="page" href="#">Register</a>
-        </li>
-       
-      </ul>
-      
-    </div>
-  </div>
-</nav>
-      <main className="form-signin">
-  <form>
-     <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
-      <input type="email" className="form-control"  placeholder="name@example.com" required/>
-      <input type="password" className="form-control" placeholder="Password" required/>
-    <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-    
-  </form>
-</main>
+    <div className="App">  
+         <BrowserRouter>
+         {/* reset name below such that we don't need to reload space. */}
+          <Nav  name={name} setName={setName}/> 
+          <main className="form-signin">
+
+              <Route path="/" exact component={() => <Home name={name}/>}/>
+              <Route path="/login" component={() => <Login setName={setName}/>}/>
+              <Route path="/register" component={Register}/>
+            
+          </main>
+          </BrowserRouter>
     </div>
   );
 }
