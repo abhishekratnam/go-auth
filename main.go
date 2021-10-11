@@ -1,8 +1,8 @@
 package main
 
 import (
-	"./database"
-	"./routes"
+	"github.com/abhishekratnam/go-auth/database"
+	"github.com/abhishekratnam/go-auth/routes"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -11,5 +11,5 @@ func main() {
 	app := fiber.New()
 	routes.Setup(app)
 
-	app.Listen(":3000")
+	app.Listen(":8000")
 }
