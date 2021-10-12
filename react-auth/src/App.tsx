@@ -12,7 +12,7 @@ function App() {
         (
             async()=>{
                 const response = await fetch('http://localhost:8000/api/user',{
-                      
+                      method:'GET',
                        headers: {'Content-Type':'application/json'},
                        credentials:'include', //to get cookies from backend                      
                    }); 
@@ -30,11 +30,9 @@ function App() {
          {/* reset name below such that we don't need to reload space. */}
           <Nav  name={name} setName={setName}/> 
           <main className="form-signin">
-
               <Route path="/" exact component={() => <Home name={name}/>}/>
               <Route path="/login" component={() => <Login setName={setName}/>}/>
-              <Route path="/register" component={Register}/>
-            
+              <Route path="/register" component={Register}/>          
           </main>
           </BrowserRouter>
     </div>
