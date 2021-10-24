@@ -12,7 +12,7 @@ var DB *gorm.DB
 
 func Connect() {
 	user := "user1"
-	password := "jarvis"
+	password := ""
 	host := "localhost"
 	port := "3306"
 	dbname := "sys"
